@@ -1,5 +1,3 @@
-
-
 let books = [[13, 80.0, 'Simon Sinek', 'Start with why', 1],
 [22, 59.9, 'J.Clark Scott', 'But how do it know', 2],
 [5, 50.0, 'Robert Cecil Martin', 'Clean Code', 3],
@@ -16,11 +14,12 @@ function searchBooks(name, amount, balance) {
                 console.log(books[i]);
                 console.log('*****book is available*****\n')
                 let book = books[i];
-                
+
                 console.log('The amount you want is: ' + amount);
                 if (book[0] < amount) {
                     console.log('\n**sorry the amount you ordered is not available**\n');
-                }else if(book[0] > amount){
+                    break;
+                } else if (book[0] > amount) {
                     console.log('\n**amount available**\n');
                 }
 
@@ -28,7 +27,8 @@ function searchBooks(name, amount, balance) {
                 let total = book[1] * amount;
                 if (total > balance) {
                     console.log('\n**sorry your balance is not enough**\n');
-                }else if(total < balance){
+                    break;
+                } else if (total < balance) {
                     console.log('\n**balance is enough**\n');
                 }
 
@@ -38,7 +38,10 @@ function searchBooks(name, amount, balance) {
 
                 let old = book[0];
                 books[i].shift();
-                books[i].unshift(old - amount);
+                if (old < amount) {
+                    books[i].unshift(old)
+                } else
+                    books[i].unshift(old - amount);
                 console.table(books);
             }
         }
@@ -46,4 +49,4 @@ function searchBooks(name, amount, balance) {
 }
 
 
-console.log(searchBooks(3, 6, 500));
+console.log(searchBooks('Simon Sinek', 3, 500));
